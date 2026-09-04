@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KOTU — King of the Utility</title>
+<meta name="description" content="One Windows app for video, audio, images, documents, PDFs and archives. MIT licensed, open source.">
+
+<meta property="og:title" content="KOTU — King of the Utility">
+<meta property="og:description" content="One Windows app for video, audio, images, documents, PDFs and archives. MIT licensed, open source.">
+<meta property="og:url" content="https://kdmhkim.github.io/noviav2/kotu-download/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="KOTU">
+<meta name="twitter:card" content="summary">
+<!-- og:image goes here once the app icon is ready:
+     <meta property="og:image" content="https://kdmhkim.github.io/noviav2/kotu-download/og-image.png">
+     It must be an absolute URL - preview crawlers do not resolve relative paths.
+     Switch twitter:card to summary_large_image if the artwork is wide. -->
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23131a22'/%3E%3Ctext x='16' y='23' font-family='Consolas,monospace' font-size='19' font-weight='700' fill='%23f2f5f8' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
+
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GD8KEMMKLN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  /* Referral codes arriving as ?c=... on the URL.
+     To add a channel later, add one entry here. Anything not listed
+     is reported as 'direct'. */
+  var KNOWN_CHANNELS = ['bs', 'ms'];
+
+  function readChannel() {
+    try {
+      var code = new URLSearchParams(window.location.search).get('c');
+      return KNOWN_CHANNELS.indexOf(code) !== -1 ? code : 'direct';
+    } catch (err) {
+      return 'direct';
+    }
+  }
+
+  var kotuChannel = readChannel();
+
+  gtag('config', 'G-GD8KEMMKLN', {
+    channel: kotuChannel,
+    transport_type: 'beacon'
+  });
+</script>
+
+<style>
+  :root {
+    color-scheme: light dark;
+
+    --paper:    #e9edf1;
+    --surface:  #ffffff;
+    --ink:      #131a22;
+    --muted:    #5a6672;
+    --rule:     #ccd4dc;
+    --accent:   #4433c7;
+
+    --m-image:    #a32c57;
+    --m-video:    #7a32ad;
+    --m-audio:    #3f45b8;
+    --m-document: #15669e;
+    --m-archive:  #0e6e60;
+    --m-any:      #4f6b1e;
+    --m-hardware: #9a5410;
+
+    --font-display: "Cascadia Mono", "Cascadia Code", Consolas, "DejaVu Sans Mono", ui-monospace, monospace;
+    --font-body: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+
+    --step-0: 1rem;
+    --step-1: 1.25rem;
+    --step-2: 1.5625rem;
+    --step-3: 1.953rem;
+    --measure: 64ch;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:    #0f141a;
+      --surface:  #171f28;
+      --ink:      #e7ecf1;
+      --muted:    #9aa7b4;
+      --rule:     #2b3641;
+      --accent:   #9d92ff;
+
+      --m-image:    #f08cae;
+      --m-video:    #c99be8;
+      --m-audio:    #97a0f0;
+      --m-document: #6fb6e8;
+      --m-archive:  #5fc9b8;
+      --m-any:      #b6cc63;
+      --m-hardware: #e8a55e;
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    line-height: 1.6;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .wrap {
+    max-width: 54rem;
+    margin: 0 auto;
+    padding: clamp(2rem, 6vw, 4.5rem) clamp(1.15rem, 5vw, 2.5rem) 3rem;
+  }
+
+  a { color: inherit; }
+
+  a:focus-visible,
+  .dl:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  /* ---------- masthead ---------- */
+
+  .mast { margin-bottom: clamp(2.25rem, 5vw, 3.25rem); }
+
+  .wordmark {
+    font-family: var(--font-display);
+    font-size: clamp(2.75rem, 11vw, 4.75rem);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    line-height: 1;
+    margin: 0;
+  }
+
+  .tagline {
+    font-family: var(--font-display);
+    font-size: var(--step-0);
+    color: var(--muted);
+    letter-spacing: 0.02em;
+    margin: 0.6rem 0 0;
+  }
+
+  .lead {
+    font-size: var(--step-1);
+    line-height: 1.5;
+    max-width: var(--measure);
+    margin: clamp(1.5rem, 4vw, 2.25rem) 0 0;
+  }
+
+  /* ---------- downloads ---------- */
+
+  .downloads {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15.5rem, 1fr));
+    gap: clamp(1.25rem, 3vw, 2rem);
+    margin: clamp(2rem, 5vw, 3rem) 0 0;
+  }
+
+  .option { min-width: 0; }
+
+  .dl {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    font-family: var(--font-body);
+    font-size: var(--step-1);
+    font-weight: 600;
+    padding: 0.9rem 1.25rem;
+    border: 2px solid var(--ink);
+    border-radius: 3px;
+    transition: transform 0.08s ease-out;
+  }
+
+  .dl--primary {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .dl--secondary {
+    background: transparent;
+    color: var(--ink);
+  }
+
+  .dl:hover { transform: translateY(-1px); }
+  .dl:active { transform: translateY(0); }
+
+  .option__file {
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    color: var(--muted);
+    margin: 0.75rem 0 0;
+    word-break: break-all;
+  }
+
+  .option__file .rec {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .option__note {
+    font-size: 0.9375rem;
+    color: var(--muted);
+    margin: 0.4rem 0 0;
+  }
+
+  /* ---------- sections ---------- */
+
+  .section {
+    margin-top: clamp(3rem, 7vw, 4.5rem);
+    padding-top: clamp(1.5rem, 3vw, 2rem);
+    border-top: 1px solid var(--rule);
+  }
+
+  .section__title {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    margin: 0 0 1.5rem;
+  }
+
+  /* ---------- modules ---------- */
+
+  .modules {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .module {
+    border-left: 4px solid var(--hue);
+    padding: 0.85rem 0 0.85rem 1rem;
+  }
+
+  .module + .module { border-top: 1px solid var(--rule); }
+
+  .module__name {
+    font-family: var(--font-display);
+    font-size: var(--step-0);
+    font-weight: 700;
+    color: var(--hue);
+    margin: 0;
+  }
+
+  .module__types {
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    color: var(--muted);
+    margin: 0.3rem 0 0;
+    word-spacing: 0.35em;
+  }
+
+  .module__desc {
+    margin: 0.35rem 0 0;
+    max-width: var(--measure);
+    color: var(--ink);
+  }
+
+  /* ---------- requirements ---------- */
+
+  .req {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: var(--measure);
+  }
+
+  .req li { margin-bottom: 0.85rem; }
+  .req li:last-child { margin-bottom: 0; }
+
+  .req strong {
+    font-family: var(--font-display);
+    font-weight: 700;
+  }
+
+  /* ---------- footer ---------- */
+
+  .foot {
+    margin-top: clamp(3rem, 7vw, 4.5rem);
+    padding-top: clamp(1.5rem, 3vw, 2rem);
+    border-top: 1px solid var(--rule);
+    font-size: 0.9375rem;
+    color: var(--muted);
+    max-width: var(--measure);
+  }
+
+  .foot p { margin: 0 0 0.85rem; }
+  .foot p:last-child { margin-bottom: 0; }
+
+  .foot a {
+    color: var(--ink);
+    text-decoration-color: var(--rule);
+    text-underline-offset: 0.15em;
+  }
+
+  .foot a:hover { text-decoration-color: var(--accent); }
+
+  .made {
+    font-family: var(--font-display);
+    letter-spacing: 0.03em;
+    color: var(--ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="mast">
+    <h1 class="wordmark">KOTU</h1>
+    <p class="tagline">King of the Utility</p>
+    <p class="lead">
+      One Windows app for the files you open every day. Video, audio, images,
+      documents, PDFs and archives all open in the same window — double-click
+      and it is there.
+    </p>
+  </header>
+
+  <div class="downloads">
+    <div class="option">
+      <a class="dl dl--primary"
+         href="https://github.com/zpstudios/kotu/releases/latest"
+         data-variant="installer">Download the installer</a>
+      <p class="option__file"><span class="rec">Recommended</span> · KOTU-win-Setup.exe</p>
+      <p class="option__note">
+        Registers in the Start menu and updates itself. No administrator rights needed.
+      </p>
+    </div>
+
+    <div class="option">
+      <a class="dl dl--secondary"
+         href="https://github.com/zpstudios/kotu/releases/latest"
+         data-variant="portable">Download the portable zip</a>
+      <p class="option__file">KOTU-win-Portable.zip</p>
+      <p class="option__note">
+        Unzip into any folder and run it from there. It updates itself too.
+      </p>
+    </div>
+  </div>
+
+  <section class="section">
+    <h2 class="section__title">Seven modules, one window</h2>
+    <ul class="modules">
+
+      <li class="module" style="--hue: var(--m-image)">
+        <p class="module__name">Image</p>
+        <p class="module__types">jpg png gif webp bmp tif ico psd</p>
+        <p class="module__desc">
+          Arrow keys walk the folder, the wheel zooms from 10% to 800%, and EXIF
+          rotation is applied automatically.
+        </p>
+      </li>
+
+      <li class="module" style="--hue: var(--m-video)">
+        <p class="module__name">Video</p>
+        <p class="module__desc">
+          Plays through the bundled libvlc engine and remembers where you stopped.
+          Folder playback and repeat modes are included.
+        </p>
+      </li>
+
+      <li class="module" style="--hue: var(--m-audio)">
+        <p class="module__name">Audio</p>
+        <p class="module__desc">
+          Picks up where you left off, the same way video does, with folder
+          playback and repeat modes.
+        </p>
+      </li>
+
+      <li class="module" style="--hue: var(--m-document)">
+        <p class="module__name">Document</p>
+        <p class="module__desc">
+          Markdown and HTML render to a reading view, and text files keep their
+          encoding when you save them.
+        </p>
+      </li>
+
+      <li class="module" style="--hue: var(--m-archive)">
+        <p class="module__name">Archive</p>
+        <p class="module__types">zip 7z rar tar</p>
+        <p class="module__desc">
+          Archives open in place, and you can open a single file straight out of
+          one without extracting it first.
+        </p>
+      </li>
+
+      <li class="module" style="--hue: var(--m-any)">
+        <p class="module__name">All Readable</p>
+        <p class="module__desc">
+          Everything else KOTU recognizes opens in the same window, so there is no
+          hunting for the right application.
+        </p>
+      </li>
+
+      <li class="module" style="--hue: var(--m-hardware)">
+        <p class="module__name">Hardware Monitor</p>
+        <p class="module__desc">
+          CPU and GPU temperatures, load, clocks, RAM, fans and drive temperatures
+          on live graphs. Pin one sensor to the tray icon.
+        </p>
+      </li>
+
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2 class="section__title">What you need</h2>
+    <ul class="req">
+      <li>
+        <strong>Windows 10 version 1809 or newer, or Windows 11.</strong>
+        64-bit (x64) only.
+      </li>
+      <li>
+        <strong>No codec pack.</strong>
+        The extraction and playback engines ship inside the app — 7-Zip and
+        libvlc are bundled — so it plays and extracts the moment you install it.
+      </li>
+    </ul>
+  </section>
+
+  <footer class="foot">
+    <p>
+      KOTU is MIT licensed and the source is public. Builds come out of CI, and
+      the third-party notices list every engine that ships inside it —
+      <a href="https://github.com/zpstudios/kotu">github.com/zpstudios/kotu</a>
+    </p>
+    <p>
+      Still on 0.x and under active development. Rough edges are real, and the
+      issue tracker is open when you hit one.
+    </p>
+    <p class="made">Made by Automanix</p>
+  </footer>
+
+</div>
+
+<script>
+  /* The links work on their own. This only adds measurement on top:
+     no preventDefault, and the beacon transport survives the page unload. */
+  document.addEventListener('click', function (event) {
+    var link = event.target.closest ? event.target.closest('a[data-variant]') : null;
+    if (!link) return;
+    gtag('event', 'download_click', {
+      variant: link.getAttribute('data-variant'),
+      channel: kotuChannel,
+      transport_type: 'beacon'
+    });
+  });
+</script>
+</body>
+</html>
