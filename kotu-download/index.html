@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KOTU — King of the Utility</title>
+<title>KOTU — King of the Util</title>
 <meta name="description" content="One Windows app for video, audio, images, documents, PDFs and archives. MIT licensed, open source.">
 
-<meta property="og:title" content="KOTU — King of the Utility">
+<meta property="og:title" content="KOTU — King of the Util">
 <meta property="og:description" content="One Windows app for video, audio, images, documents, PDFs and archives. MIT licensed, open source.">
 <meta property="og:url" content="https://kdmhkim.github.io/noviav2/kotu-download/">
 <meta property="og:type" content="website">
@@ -17,7 +17,7 @@
      It must be an absolute URL - preview crawlers do not resolve relative paths.
      Switch twitter:card to summary_large_image if the artwork is wide. -->
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23131a22'/%3E%3Ctext x='16' y='23' font-family='Consolas,monospace' font-size='19' font-weight='700' fill='%23f2f5f8' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230A0F15'/%3E%3Ctext x='16' y='23' font-family='Segoe UI,Arial,sans-serif' font-size='19' font-weight='800' fill='%23D79125' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
 
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-GD8KEMMKLN"></script>
@@ -50,217 +50,442 @@
 
 <style>
   :root {
-    color-scheme: light dark;
+    color-scheme: dark;
 
-    --paper:    #e9edf1;
-    --surface:  #ffffff;
-    --ink:      #131a22;
-    --muted:    #5a6672;
-    --rule:     #ccd4dc;
-    --accent:   #4433c7;
+    --bg:        #0A0F15;
+    --surface:   #151A20;
+    --surface-2: #1B2129;
+    --rule:      #252C35;
+    --gold:      #D79125;
+    --gold-btn:  #DBA542;
+    --gold-soft: #EBC36D;
+    --ink:       #F2F5F8;
+    --muted:     #8A96A3;
 
-    --m-image:    #a32c57;
-    --m-video:    #7a32ad;
-    --m-audio:    #3f45b8;
-    --m-document: #15669e;
-    --m-archive:  #0e6e60;
-    --m-any:      #4f6b1e;
-    --m-hardware: #9a5410;
+    --m-audio:    #97A0F0;
+    --m-video:    #C99BE8;
+    --m-image:    #F08CAE;
+    --m-document: #6FB6E8;
+    --m-archive:  #5FC9B8;
+    --m-any:      #B6CC63;
+    --m-hardware: #E8A55E;
 
-    --font-display: "Cascadia Mono", "Cascadia Code", Consolas, "DejaVu Sans Mono", ui-monospace, monospace;
-    --font-body: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
-
-    --step-0: 1rem;
-    --step-1: 1.25rem;
-    --step-2: 1.5625rem;
-    --step-3: 1.953rem;
+    --font: "Segoe UI Variable Display", "Segoe UI", system-ui, -apple-system, sans-serif;
+    --nav-h: 4rem;
     --measure: 64ch;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --paper:    #0f141a;
-      --surface:  #171f28;
-      --ink:      #e7ecf1;
-      --muted:    #9aa7b4;
-      --rule:     #2b3641;
-      --accent:   #9d92ff;
-
-      --m-image:    #f08cae;
-      --m-video:    #c99be8;
-      --m-audio:    #97a0f0;
-      --m-document: #6fb6e8;
-      --m-archive:  #5fc9b8;
-      --m-any:      #b6cc63;
-      --m-hardware: #e8a55e;
-    }
   }
 
   *, *::before, *::after { box-sizing: border-box; }
 
+  html { scroll-behavior: smooth; }
+
   body {
     margin: 0;
-    padding: 0;
-    background: var(--paper);
+    padding: var(--nav-h) 0 0;
+    background: var(--bg);
     color: var(--ink);
-    font-family: var(--font-body);
-    font-size: var(--step-0);
+    font-family: var(--font);
+    font-size: 1rem;
     line-height: 1.6;
     -webkit-text-size-adjust: 100%;
-  }
-
-  .wrap {
-    max-width: 54rem;
-    margin: 0 auto;
-    padding: clamp(2rem, 6vw, 4.5rem) clamp(1.15rem, 5vw, 2.5rem) 3rem;
   }
 
   a { color: inherit; }
 
   a:focus-visible,
-  .dl:focus-visible {
-    outline: 2px solid var(--accent);
+  button:focus-visible {
+    outline: 2px solid var(--gold-soft);
     outline-offset: 3px;
   }
 
-  /* ---------- masthead ---------- */
-
-  .mast { margin-bottom: clamp(2.25rem, 5vw, 3.25rem); }
-
-  .wordmark {
-    font-family: var(--font-display);
-    font-size: clamp(2.75rem, 11vw, 4.75rem);
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    line-height: 1;
+  h1, h2, h3 {
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
     margin: 0;
   }
 
-  .tagline {
-    font-family: var(--font-display);
-    font-size: var(--step-0);
+  .wrap {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding-left: clamp(1.15rem, 5vw, 2.5rem);
+    padding-right: clamp(1.15rem, 5vw, 2.5rem);
+  }
+
+  section { scroll-margin-top: calc(var(--nav-h) + 1rem); }
+
+  /* ---------- nav ---------- */
+
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    height: var(--nav-h);
+    background: rgba(10, 15, 21, 0.92);
+    border-bottom: 1px solid var(--rule);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .nav__inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    text-decoration: none;
+    min-width: 0;
+  }
+
+  .brand__icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    flex: none;
+  }
+
+  .brand__name {
+    display: block;
+    font-weight: 800;
+    font-size: 1.25rem;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+  }
+
+  .brand__sub {
+    display: block;
+    font-size: 0.75rem;
+    line-height: 1;
+    margin-top: 0.3rem;
     color: var(--muted);
-    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .nav__links {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 3vw, 2rem);
+  }
+
+  .nav__link {
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--ink);
+    padding: 0.25rem 0;
+    border-bottom: 2px solid transparent;
+  }
+
+  .nav__link:hover { border-bottom-color: var(--gold); }
+
+  /* ---------- buttons ---------- */
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    font-weight: 700;
+    line-height: 1.2;
+    border-radius: 0.5rem;
+    border: 2px solid var(--gold-btn);
+    padding: 0.7rem 1.25rem;
+    white-space: nowrap;
+    transition: transform 0.08s ease-out, background-color 0.12s ease-out;
+  }
+
+  .btn--gold {
+    background: var(--gold-btn);
+    color: var(--bg);
+  }
+
+  .btn--gold:hover { background: var(--gold-soft); border-color: var(--gold-soft); }
+
+  .btn--ghost {
+    background: transparent;
+    color: var(--gold-soft);
+  }
+
+  .btn--ghost:hover { background: rgba(219, 165, 66, 0.12); }
+
+  .btn:hover { transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+
+  .btn--lg {
+    font-size: 1.15rem;
+    padding: 1rem 2rem;
+  }
+
+  .btn svg { width: 1.1em; height: 1.1em; flex: none; }
+
+  /* ---------- hero ---------- */
+
+  .hero { padding: clamp(3rem, 8vw, 6rem) 0 clamp(2rem, 5vw, 3.5rem); }
+
+  .hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+
+  .hero__wordmark {
+    font-size: clamp(4.5rem, 14vw, 9rem);
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    line-height: 0.95;
+    color: var(--gold);
+  }
+
+  .hero__sub {
+    font-size: clamp(1.15rem, 2.5vw, 1.5rem);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
     margin: 0.6rem 0 0;
   }
 
-  .lead {
-    font-size: var(--step-1);
-    line-height: 1.5;
-    max-width: var(--measure);
-    margin: clamp(1.5rem, 4vw, 2.25rem) 0 0;
+  .hero__title {
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    line-height: 1.15;
+    max-width: 18ch;
+    margin: clamp(1.5rem, 3vw, 2.25rem) 0 0;
   }
 
-  /* ---------- downloads ---------- */
-
-  .downloads {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15.5rem, 1fr));
-    gap: clamp(1.25rem, 3vw, 2rem);
-    margin: clamp(2rem, 5vw, 3rem) 0 0;
-  }
-
-  .option { min-width: 0; }
-
-  .dl {
-    display: block;
-    text-align: center;
-    text-decoration: none;
-    font-family: var(--font-body);
-    font-size: var(--step-1);
+  .hero__list {
+    color: var(--gold-soft);
     font-weight: 600;
-    padding: 0.9rem 1.25rem;
-    border: 2px solid var(--ink);
-    border-radius: 3px;
-    transition: transform 0.08s ease-out;
+    font-size: clamp(1rem, 1.8vw, 1.2rem);
+    line-height: 1.7;
+    margin: 1.25rem 0 0;
   }
 
-  .dl--primary {
-    background: var(--ink);
-    color: var(--paper);
+  .hero__list span { display: block; }
+
+  .hero__art {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    max-width: 34rem;
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 1.5rem;
+    background: radial-gradient(circle at 50% 45%, rgba(215, 145, 37, 0.18), transparent 62%);
   }
 
-  .dl--secondary {
-    background: transparent;
-    color: var(--ink);
+  .hero__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    color: transparent;
   }
 
-  .dl:hover { transform: translateY(-1px); }
-  .dl:active { transform: translateY(0); }
+  /* ---------- badges ---------- */
 
-  .option__file {
-    font-family: var(--font-display);
-    font-size: 0.875rem;
-    color: var(--muted);
-    margin: 0.75rem 0 0;
-    word-break: break-all;
-  }
-
-  .option__file .rec {
-    color: var(--accent);
-    font-weight: 700;
-  }
-
-  .option__note {
-    font-size: 0.9375rem;
-    color: var(--muted);
-    margin: 0.4rem 0 0;
-  }
-
-  /* ---------- sections ---------- */
-
-  .section {
-    margin-top: clamp(3rem, 7vw, 4.5rem);
-    padding-top: clamp(1.5rem, 3vw, 2rem);
-    border-top: 1px solid var(--rule);
-  }
-
-  .section__title {
-    font-family: var(--font-display);
-    font-size: var(--step-2);
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    margin: 0 0 1.5rem;
-  }
-
-  /* ---------- modules ---------- */
-
-  .modules {
+  .badges {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
     list-style: none;
     margin: 0;
     padding: 0;
   }
 
-  .module {
-    border-left: 4px solid var(--hue);
-    padding: 0.85rem 0 0.85rem 1rem;
+  .badge {
+    display: flex;
+    gap: 0.9rem;
+    align-items: flex-start;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 0.75rem;
+    padding: 1.1rem 1.15rem;
   }
 
-  .module + .module { border-top: 1px solid var(--rule); }
+  .badge svg {
+    width: 1.75rem;
+    height: 1.75rem;
+    flex: none;
+    color: var(--gold);
+  }
+
+  .badge__title {
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 0;
+  }
+
+  .badge__sub {
+    font-size: 0.875rem;
+    color: var(--muted);
+    margin: 0.25rem 0 0;
+  }
+
+  /* ---------- download ---------- */
+
+  .download {
+    text-align: center;
+    padding: clamp(3rem, 8vw, 5.5rem) 0 clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .download__title {
+    font-size: clamp(1.6rem, 3.5vw, 2.25rem);
+    margin-bottom: 0.5rem;
+  }
+
+  .download__lead {
+    color: var(--muted);
+    max-width: 48ch;
+    margin: 0 auto;
+  }
+
+  .downloads {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: clamp(1.25rem, 3vw, 2rem);
+    margin: 2rem 0 0;
+  }
+
+  .option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .option .btn { min-width: 16rem; }
+
+  .option__file {
+    font-family: Consolas, "Cascadia Mono", ui-monospace, monospace;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin: 0.65rem 0 0;
+    word-break: break-all;
+  }
+
+  .option__note {
+    font-size: 0.9rem;
+    color: var(--muted);
+    max-width: 26ch;
+    line-height: 1.45;
+    margin: 0.35rem 0 0;
+  }
+
+  .download__os {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin: 1.75rem 0 0;
+  }
+
+  /* ---------- features ---------- */
+
+  .features { padding: clamp(2rem, 5vw, 3.5rem) 0; }
+
+  .section__title {
+    font-size: clamp(1.6rem, 3.5vw, 2.25rem);
+    margin-bottom: 1.5rem;
+  }
+
+  .section__title em,
+  .download__title em {
+    font-style: normal;
+    color: var(--gold);
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--hue);
+    border-radius: 0.75rem;
+    padding: 1.25rem 1rem 1.15rem;
+    min-width: 0;
+  }
+
+  .card svg {
+    width: 2rem;
+    height: 2rem;
+    color: var(--hue);
+    display: block;
+  }
+
+  .card__name {
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.25;
+    margin: 0.85rem 0 0;
+  }
+
+  .card__desc {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.45;
+    margin: 0.35rem 0 0;
+  }
+
+  /* ---------- detail sections ---------- */
+
+  .section {
+    margin-top: clamp(2.5rem, 6vw, 4rem);
+    padding-top: clamp(1.5rem, 3vw, 2rem);
+    border-top: 1px solid var(--rule);
+  }
+
+  .modules {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+    gap: 1rem;
+  }
+
+  .module {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--hue);
+    border-radius: 0.5rem;
+    padding: 1rem 1.15rem;
+  }
 
   .module__name {
-    font-family: var(--font-display);
-    font-size: var(--step-0);
     font-weight: 700;
+    font-size: 1rem;
     color: var(--hue);
     margin: 0;
   }
 
   .module__types {
-    font-family: var(--font-display);
-    font-size: 0.8125rem;
+    font-family: Consolas, "Cascadia Mono", ui-monospace, monospace;
+    font-size: 0.8rem;
     color: var(--muted);
     margin: 0.3rem 0 0;
     word-spacing: 0.35em;
   }
 
   .module__desc {
-    margin: 0.35rem 0 0;
-    max-width: var(--measure);
+    margin: 0.4rem 0 0;
+    font-size: 0.95rem;
     color: var(--ink);
   }
-
-  /* ---------- requirements ---------- */
 
   .req {
     list-style: none;
@@ -272,23 +497,46 @@
   .req li { margin-bottom: 0.85rem; }
   .req li:last-child { margin-bottom: 0; }
 
-  .req strong {
-    font-family: var(--font-display);
-    font-weight: 700;
+  .req strong { color: var(--gold-soft); }
+
+  /* ---------- closing ---------- */
+
+  .closing {
+    text-align: center;
+    margin-top: clamp(3rem, 8vw, 5rem);
+    padding: clamp(2.5rem, 6vw, 4rem) 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .closing__traits {
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: clamp(0.85rem, 1.6vw, 1.05rem);
+    color: var(--gold-soft);
+    margin: 0;
+  }
+
+  .closing__slogan {
+    font-size: clamp(1.6rem, 4vw, 2.75rem);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    color: var(--gold);
+    margin: 0.75rem 0 0;
   }
 
   /* ---------- footer ---------- */
 
   .foot {
-    margin-top: clamp(3rem, 7vw, 4.5rem);
-    padding-top: clamp(1.5rem, 3vw, 2rem);
-    border-top: 1px solid var(--rule);
+    padding-top: clamp(2rem, 4vw, 3rem);
+    padding-bottom: 3rem;
     font-size: 0.9375rem;
     color: var(--muted);
-    max-width: var(--measure);
   }
 
-  .foot p { margin: 0 0 0.85rem; }
+  .foot p { margin: 0 0 0.85rem; max-width: var(--measure); }
   .foot p:last-child { margin-bottom: 0; }
 
   .foot a {
@@ -297,148 +545,299 @@
     text-underline-offset: 0.15em;
   }
 
-  .foot a:hover { text-decoration-color: var(--accent); }
+  .foot a:hover { text-decoration-color: var(--gold); }
 
   .made {
-    font-family: var(--font-display);
+    font-weight: 700;
     letter-spacing: 0.03em;
-    color: var(--ink);
+    color: var(--gold-soft);
+  }
+
+  /* ---------- responsive ---------- */
+
+  @media (max-width: 64rem) {
+    .badges { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+
+  @media (max-width: 44rem) {
+    .hero__grid { grid-template-columns: minmax(0, 1fr); }
+    .hero__art { max-width: 18rem; }
+    .hero__title { max-width: none; }
+    .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .brand__sub { display: none; }
+    .nav .btn { padding: 0.55rem 0.9rem; font-size: 0.9rem; }
+    .nav .btn svg { display: none; }
+  }
+
+  @media (max-width: 28rem) {
+    .badges { grid-template-columns: minmax(0, 1fr); }
+    .option, .option .btn { width: 100%; min-width: 0; }
+    .option__note { max-width: none; }
   }
 
   @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
     * { transition: none !important; }
   }
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <header class="mast">
-    <h1 class="wordmark">KOTU</h1>
-    <p class="tagline">King of the Utility</p>
-    <p class="lead">
-      One Windows app for the files you open every day. Video, audio, images,
-      documents, PDFs and archives all open in the same window — double-click
-      and it is there.
-    </p>
-  </header>
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="#top" aria-label="KOTU home">
+      <svg class="brand__icon" viewBox="0 0 32 32" aria-hidden="true">
+        <rect width="32" height="32" rx="7" fill="#151A20"/>
+        <path d="M9 7h4v8l7-8h5l-8 9 8 9h-5l-7-8v8H9z" fill="#D79125"/>
+      </svg>
+      <span>
+        <span class="brand__name">KOTU</span>
+        <span class="brand__sub">King of the Util</span>
+      </span>
+    </a>
+    <nav class="nav__links" aria-label="Main">
+      <a class="nav__link" href="#features">Features</a>
+      <a class="btn btn--gold" href="#download">
+        Download KOTU
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12m0 0l-5-5m5 5l5-5M5 20h14"/></svg>
+      </a>
+    </nav>
+  </div>
+</header>
 
-  <div class="downloads">
-    <div class="option">
-      <a class="dl dl--primary"
-         href="https://github.com/zpstudios/kotu/releases/latest"
-         data-variant="installer">Download the installer</a>
-      <p class="option__file"><span class="rec">Recommended</span> · KOTU-win-Setup.exe</p>
-      <p class="option__note">
-        Registers in the Start menu and updates itself. No administrator rights needed.
-      </p>
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap hero__grid">
+      <div>
+        <h1 class="hero__wordmark">KOTU</h1>
+        <p class="hero__sub">King of the Util</p>
+        <h2 class="hero__title">All your essential Windows apps in one</h2>
+        <p class="hero__list">
+          <span>Audio player · Video player · Photo viewer</span>
+          <span>Document viewer · Archival · H/W info</span>
+        </p>
+      </div>
+      <div class="hero__art">
+        <img class="hero__img" src="kotu-hero.png" alt="KOTU mascot" width="560" height="560" loading="eager" decoding="async" onerror="this.style.display='none'">
+      </div>
     </div>
+  </section>
 
-    <div class="option">
-      <a class="dl dl--secondary"
-         href="https://github.com/zpstudios/kotu/releases/latest"
-         data-variant="portable">Download the portable zip</a>
-      <p class="option__file">KOTU-win-Portable.zip</p>
-      <p class="option__note">
-        Unzip into any folder and run it from there. It updates itself too.
+  <section class="wrap" aria-label="Why KOTU">
+    <ul class="badges">
+      <li class="badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12v8H4v-8"/><path d="M2 7h20v5H2z"/><path d="M12 7v13"/></svg>
+        <div>
+          <p class="badge__title">No Bloat</p>
+          <p class="badge__sub">Just what you need</p>
+        </div>
+      </li>
+      <li class="badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.9 17.9A10 10 0 0 1 2 12s3-7 10-7a9.7 9.7 0 0 1 3.5.6"/><path d="M22 12s-1 2.3-3 4"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/><path d="M3 3l18 18"/></svg>
+        <div>
+          <p class="badge__title">No Ads, No Tracking</p>
+          <p class="badge__sub">Nothing runs in the background</p>
+        </div>
+      </li>
+      <li class="badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/><circle cx="12" cy="16" r="1"/></svg>
+        <div>
+          <p class="badge__title">No Personal Info Collection</p>
+          <p class="badge__sub">Your privacy is respected</p>
+        </div>
+      </li>
+      <li class="badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>
+        <div>
+          <p class="badge__title">100% Free License</p>
+          <p class="badge__sub">Personal &amp; Commercial Use</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <section class="download" id="download">
+    <div class="wrap">
+      <h2 class="download__title">Get <em>KOTU</em></h2>
+      <p class="download__lead">
+        One Windows app for the files you open every day. Video, audio, images,
+        documents, PDFs and archives all open in the same window.
       </p>
+
+      <div class="downloads">
+        <div class="option">
+          <a class="btn btn--gold btn--lg"
+             href="https://github.com/zpstudios/kotu/releases/latest"
+             data-variant="installer">
+            Download KOTU
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12m0 0l-5-5m5 5l5-5M5 20h14"/></svg>
+          </a>
+          <p class="option__file">KOTU-win-Setup.exe</p>
+          <p class="option__note">
+            Registers in the Start menu and updates itself. No administrator rights needed.
+          </p>
+        </div>
+
+        <div class="option">
+          <a class="btn btn--ghost btn--lg"
+             href="https://github.com/zpstudios/kotu/releases/latest"
+             data-variant="portable">Portable version</a>
+          <p class="option__file">KOTU-win-Portable.zip</p>
+          <p class="option__note">
+            Unzip into any folder and run it from there. It updates itself too.
+          </p>
+        </div>
+      </div>
+
+      <p class="download__os">Works on Windows 10 / 11 (64-bit)</p>
     </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="wrap">
+      <h2 class="section__title">Everything in <em>one window</em></h2>
+      <ul class="cards">
+        <li class="card" style="--hue: var(--m-audio)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V6l11-2v12"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>
+          <p class="card__name">Audio Player</p>
+          <p class="card__desc">Play all your music files</p>
+        </li>
+        <li class="card" style="--hue: var(--m-video)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></svg>
+          <p class="card__name">Video Player</p>
+          <p class="card__desc">Enjoy your videos in high quality</p>
+        </li>
+        <li class="card" style="--hue: var(--m-image)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>
+          <p class="card__name">Photo Viewer</p>
+          <p class="card__desc">View your photos fast and easy</p>
+        </li>
+        <li class="card" style="--hue: var(--m-document)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg>
+          <p class="card__name">Document Viewer</p>
+          <p class="card__desc">Read documents with ease</p>
+        </li>
+        <li class="card" style="--hue: var(--m-archive)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M2 4h20v3H2z"/><path d="M10 12h4"/></svg>
+          <p class="card__name">Archival</p>
+          <p class="card__desc">Manage archives like a pro</p>
+        </li>
+        <li class="card" style="--hue: var(--m-hardware)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="1.5"/><rect x="9.5" y="9.5" width="5" height="5"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg>
+          <p class="card__name">H/W Info</p>
+          <p class="card__desc">Know your hardware</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="wrap">
+
+    <section class="section">
+      <h2 class="section__title">Seven modules, one window</h2>
+      <ul class="modules">
+
+        <li class="module" style="--hue: var(--m-image)">
+          <p class="module__name">Image</p>
+          <p class="module__types">jpg png gif webp bmp tif ico psd</p>
+          <p class="module__desc">
+            Arrow keys walk the folder, the wheel zooms from 10% to 800%, and EXIF
+            rotation is applied automatically.
+          </p>
+        </li>
+
+        <li class="module" style="--hue: var(--m-video)">
+          <p class="module__name">Video</p>
+          <p class="module__desc">
+            Plays through the bundled libvlc engine and remembers where you stopped.
+            Folder playback and repeat modes are included.
+          </p>
+        </li>
+
+        <li class="module" style="--hue: var(--m-audio)">
+          <p class="module__name">Audio</p>
+          <p class="module__desc">
+            Picks up where you left off, the same way video does, with folder
+            playback and repeat modes.
+          </p>
+        </li>
+
+        <li class="module" style="--hue: var(--m-document)">
+          <p class="module__name">Document</p>
+          <p class="module__desc">
+            Markdown and HTML render to a reading view, and text files keep their
+            encoding when you save them.
+          </p>
+        </li>
+
+        <li class="module" style="--hue: var(--m-archive)">
+          <p class="module__name">Archive</p>
+          <p class="module__types">zip 7z rar tar</p>
+          <p class="module__desc">
+            Archives open in place, and you can open a single file straight out of
+            one without extracting it first.
+          </p>
+        </li>
+
+        <li class="module" style="--hue: var(--m-any)">
+          <p class="module__name">All Readable</p>
+          <p class="module__desc">
+            Everything else KOTU recognizes opens in the same window, so there is no
+            hunting for the right application.
+          </p>
+        </li>
+
+        <li class="module" style="--hue: var(--m-hardware)">
+          <p class="module__name">Hardware Monitor</p>
+          <p class="module__desc">
+            CPU and GPU temperatures, load, clocks, RAM, fans and drive temperatures
+            on live graphs. Pin one sensor to the tray icon.
+          </p>
+        </li>
+
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2 class="section__title">What you need</h2>
+      <ul class="req">
+        <li>
+          <strong>Windows 10 version 1809 or newer, or Windows 11.</strong>
+          64-bit (x64) only.
+        </li>
+        <li>
+          <strong>No codec pack.</strong>
+          The extraction and playback engines ship inside the app — 7-Zip and
+          libvlc are bundled — so it plays and extracts the moment you install it.
+        </li>
+      </ul>
+    </section>
+
   </div>
 
-  <section class="section">
-    <h2 class="section__title">Seven modules, one window</h2>
-    <ul class="modules">
-
-      <li class="module" style="--hue: var(--m-image)">
-        <p class="module__name">Image</p>
-        <p class="module__types">jpg png gif webp bmp tif ico psd</p>
-        <p class="module__desc">
-          Arrow keys walk the folder, the wheel zooms from 10% to 800%, and EXIF
-          rotation is applied automatically.
-        </p>
-      </li>
-
-      <li class="module" style="--hue: var(--m-video)">
-        <p class="module__name">Video</p>
-        <p class="module__desc">
-          Plays through the bundled libvlc engine and remembers where you stopped.
-          Folder playback and repeat modes are included.
-        </p>
-      </li>
-
-      <li class="module" style="--hue: var(--m-audio)">
-        <p class="module__name">Audio</p>
-        <p class="module__desc">
-          Picks up where you left off, the same way video does, with folder
-          playback and repeat modes.
-        </p>
-      </li>
-
-      <li class="module" style="--hue: var(--m-document)">
-        <p class="module__name">Document</p>
-        <p class="module__desc">
-          Markdown and HTML render to a reading view, and text files keep their
-          encoding when you save them.
-        </p>
-      </li>
-
-      <li class="module" style="--hue: var(--m-archive)">
-        <p class="module__name">Archive</p>
-        <p class="module__types">zip 7z rar tar</p>
-        <p class="module__desc">
-          Archives open in place, and you can open a single file straight out of
-          one without extracting it first.
-        </p>
-      </li>
-
-      <li class="module" style="--hue: var(--m-any)">
-        <p class="module__name">All Readable</p>
-        <p class="module__desc">
-          Everything else KOTU recognizes opens in the same window, so there is no
-          hunting for the right application.
-        </p>
-      </li>
-
-      <li class="module" style="--hue: var(--m-hardware)">
-        <p class="module__name">Hardware Monitor</p>
-        <p class="module__desc">
-          CPU and GPU temperatures, load, clocks, RAM, fans and drive temperatures
-          on live graphs. Pin one sensor to the tray icon.
-        </p>
-      </li>
-
-    </ul>
+  <section class="closing">
+    <div class="wrap">
+      <p class="closing__traits">Lightweight · Fast · Private · Secure · Powerful</p>
+      <p class="closing__slogan">KOTU reigns over utility apps</p>
+    </div>
   </section>
 
-  <section class="section">
-    <h2 class="section__title">What you need</h2>
-    <ul class="req">
-      <li>
-        <strong>Windows 10 version 1809 or newer, or Windows 11.</strong>
-        64-bit (x64) only.
-      </li>
-      <li>
-        <strong>No codec pack.</strong>
-        The extraction and playback engines ship inside the app — 7-Zip and
-        libvlc are bundled — so it plays and extracts the moment you install it.
-      </li>
-    </ul>
-  </section>
+</main>
 
-  <footer class="foot">
-    <p>
-      KOTU is MIT licensed and the source is public. Builds come out of CI, and
-      the third-party notices list every engine that ships inside it —
-      <a href="https://github.com/zpstudios/kotu">github.com/zpstudios/kotu</a>
-    </p>
-    <p>
-      Still on 0.x and under active development. Rough edges are real, and the
-      issue tracker is open when you hit one.
-    </p>
-    <p class="made">Made by Automanix</p>
-  </footer>
-
-</div>
+<footer class="wrap foot">
+  <p>
+    KOTU is MIT licensed and the source is public. Builds come out of CI, and
+    the third-party notices list every engine that ships inside it —
+    <a href="https://github.com/zpstudios/kotu">github.com/zpstudios/kotu</a>
+  </p>
+  <p>
+    Still on 0.x and under active development. Rough edges are real, and the
+    issue tracker is open when you hit one.
+  </p>
+  <p class="made">Made by Automanix</p>
+</footer>
 
 <script>
   /* The links work on their own. This only adds measurement on top:
