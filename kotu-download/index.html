@@ -705,7 +705,7 @@
             Download KOTU
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12m0 0l-5-5m5 5l5-5M5 20h14"/></svg>
           </a>
-          <p class="option__file">KOTU-win-Setup.exe</p>
+          <p class="option__file">KOTU-win-Setup.exe<span class="option__ver"></span></p>
           <p class="option__note">
             Registers in the Start menu and updates itself. No administrator rights needed.
           </p>
@@ -715,7 +715,7 @@
           <a class="btn btn--ghost btn--lg"
              href="https://github.com/zpstudios/kotu/releases/latest"
              data-variant="portable">Portable version</a>
-          <p class="option__file">KOTU-win-Portable.zip</p>
+          <p class="option__file">KOTU-win-Portable.zip<span class="option__ver"></span></p>
           <p class="option__note">
             Unzip into any folder and run it from there. It updates itself too.
           </p>
@@ -882,6 +882,55 @@
       transport_type: 'beacon'
     });
   });
+</script>
+
+<script>
+  /* Point the two download buttons at the files inside the latest release.
+     Each href starts as the releases page and is only replaced once the
+     GitHub API answers with a matching asset. Any failure - network,
+     timeout, missing asset, old browser - leaves the releases page in place. */
+  (function () {
+    if (!window.fetch || !window.AbortController) return;
+
+    /* Assets are matched by extension and keyword, not by exact name,
+       because the file names have changed before. */
+    var MATCH = {
+      installer: function (name) { return /\.exe$/.test(name) && name.indexOf('setup') !== -1; },
+      portable:  function (name) { return /\.zip$/.test(name) && name.indexOf('portable') !== -1; }
+    };
+
+    var controller = new AbortController();
+    var timer = setTimeout(function () { controller.abort(); }, 5000);
+
+    fetch('https://api.github.com/repos/zpstudios/kotu/releases/latest', {
+      signal: controller.signal,
+      headers: { 'Accept': 'application/vnd.github+json' }
+    })
+      .then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (release) {
+        if (!release || !release.assets || !release.assets.length) return;
+        var links = document.querySelectorAll('a[data-variant]');
+        for (var i = 0; i < links.length; i++) {
+          var link = links[i];
+          var test = MATCH[link.getAttribute('data-variant')];
+          if (!test) continue;
+          var asset = null;
+          for (var j = 0; j < release.assets.length; j++) {
+            var name = String(release.assets[j].name || '').toLowerCase();
+            if (test(name) && release.assets[j].browser_download_url) {
+              asset = release.assets[j];
+              break;
+            }
+          }
+          if (!asset) continue;
+          link.href = asset.browser_download_url;
+          var ver = link.parentNode.querySelector('.option__ver');
+          if (ver && release.tag_name) ver.textContent = ' · ' + release.tag_name;
+        }
+      })
+      .catch(function () { /* keep the releases page */ })
+      .then(function () { clearTimeout(timer); });
+  })();
 </script>
 </body>
 </html>
