@@ -12,12 +12,10 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="KOTU">
 <meta name="twitter:card" content="summary">
-<!-- og:image goes here once the app icon is ready:
-     <meta property="og:image" content="https://kdmhkim.github.io/noviav2/kotu-download/og-image.png">
-     It must be an absolute URL - preview crawlers do not resolve relative paths.
-     Switch twitter:card to summary_large_image if the artwork is wide. -->
+<!-- og:image must stay an absolute URL - preview crawlers do not resolve relative paths. -->
+<meta property="og:image" content="https://kdmhkim.github.io/noviav2/kotu-download/kotu-logo.png">
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230A0F15'/%3E%3Ctext x='16' y='23' font-family='Segoe UI,Arial,sans-serif' font-size='19' font-weight='800' fill='%23D79125' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/png" href="kotu-logo.png">
 
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-GD8KEMMKLN"></script>
@@ -149,6 +147,8 @@
     width: 2.25rem;
     height: 2.25rem;
     flex: none;
+    border-radius: 50%;
+    object-fit: cover;
   }
 
   .brand__name {
@@ -228,14 +228,62 @@
 
   /* ---------- hero ---------- */
 
-  .hero { padding: clamp(3rem, 8vw, 6rem) 0 clamp(2rem, 5vw, 3.5rem); }
-
-  .hero__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-    gap: clamp(2rem, 5vw, 4rem);
+  .hero {
+    position: relative;
+    overflow: hidden;
+    min-height: 32rem;
+    display: flex;
     align-items: center;
+    padding: clamp(1.5rem, 3vw, 2.5rem) 0;
   }
+
+  /* Background layer: the mascot sits on the right, taller than the box so
+     the top and bottom clip a little. */
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .hero__img {
+    position: absolute;
+    top: -6%;
+    right: max(0px, calc((100% - 72rem) / 2));
+    height: 112%;
+    width: auto;
+    max-width: 70%;
+    object-fit: contain;
+    object-position: right center;
+    color: transparent;
+  }
+
+  /* Left-to-right shade so the copy stays readable over the body, plus a
+     bottom fade into the next section. The face and breath on the right
+     stay uncovered. */
+  .hero__shade {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg,
+        var(--bg) 0%,
+        var(--bg) 32%,
+        rgba(10, 15, 21, 0.88) 44%,
+        rgba(10, 15, 21, 0.45) 58%,
+        rgba(10, 15, 21, 0) 72%),
+      linear-gradient(180deg,
+        rgba(10, 15, 21, 0) 70%,
+        rgba(10, 15, 21, 0.75) 92%,
+        var(--bg) 100%);
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+  }
+
+  .hero__copy { max-width: 36rem; }
 
   .hero__wordmark {
     font-size: clamp(4.5rem, 14vw, 9rem);
@@ -258,7 +306,7 @@
     font-size: clamp(1.75rem, 4vw, 2.75rem);
     line-height: 1.15;
     max-width: 18ch;
-    margin: clamp(1.5rem, 3vw, 2.25rem) 0 0;
+    margin: clamp(1rem, 2vw, 1.5rem) 0 0;
   }
 
   .hero__list {
@@ -270,24 +318,6 @@
   }
 
   .hero__list span { display: block; }
-
-  .hero__art {
-    position: relative;
-    aspect-ratio: 1 / 1;
-    max-width: 34rem;
-    width: 100%;
-    margin: 0 auto;
-    border-radius: 1.5rem;
-    background: radial-gradient(circle at 50% 45%, rgba(215, 145, 37, 0.18), transparent 62%);
-  }
-
-  .hero__img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    color: transparent;
-  }
 
   /* ---------- badges ---------- */
 
@@ -560,10 +590,13 @@
     .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   }
 
-  @media (max-width: 44rem) {
-    .hero__grid { grid-template-columns: minmax(0, 1fr); }
-    .hero__art { max-width: 18rem; }
-    .hero__title { max-width: none; }
+  @media (max-width: 47.99rem) {
+    .hero { min-height: 0; }
+    .hero__img { opacity: 0.25; max-width: 100%; }
+    .hero__shade {
+      background: linear-gradient(180deg, rgba(10, 15, 21, 0) 60%, var(--bg) 100%);
+    }
+    .hero__copy { max-width: none; }
     .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .brand__sub { display: none; }
     .nav .btn { padding: 0.55rem 0.9rem; font-size: 0.9rem; }
@@ -587,10 +620,7 @@
 <header class="nav">
   <div class="wrap nav__inner">
     <a class="brand" href="#top" aria-label="KOTU home">
-      <svg class="brand__icon" viewBox="0 0 32 32" aria-hidden="true">
-        <rect width="32" height="32" rx="7" fill="#151A20"/>
-        <path d="M9 7h4v8l7-8h5l-8 9 8 9h-5l-7-8v8H9z" fill="#D79125"/>
-      </svg>
+      <img class="brand__icon" src="kotu-logo.png" alt="" width="36" height="36" decoding="async" onerror="this.style.display='none'">
       <span>
         <span class="brand__name">KOTU</span>
         <span class="brand__sub">King of the Util</span>
@@ -609,8 +639,12 @@
 <main id="top">
 
   <section class="hero">
-    <div class="wrap hero__grid">
-      <div>
+    <div class="hero__bg" aria-hidden="true">
+      <img class="hero__img" src="kotu-hero.png" alt="KOTU mascot" width="900" height="900" loading="eager" decoding="async" onerror="this.style.display='none'">
+      <div class="hero__shade"></div>
+    </div>
+    <div class="wrap hero__content">
+      <div class="hero__copy">
         <h1 class="hero__wordmark">KOTU</h1>
         <p class="hero__sub">King of the Util</p>
         <h2 class="hero__title">All your essential Windows apps in one</h2>
@@ -618,9 +652,6 @@
           <span>Audio player · Video player · Photo viewer</span>
           <span>Document viewer · Archival · H/W info</span>
         </p>
-      </div>
-      <div class="hero__art">
-        <img class="hero__img" src="kotu-hero.png" alt="KOTU mascot" width="560" height="560" loading="eager" decoding="async" onerror="this.style.display='none'">
       </div>
     </div>
   </section>
